@@ -1,0 +1,79 @@
+/* CSS para o App.tsx */
+.placarContainer {
+  padding: 20px;
+  font-family: sans-serif;
+}
+
+.titulo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.timesContainer {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+.vsSpan {
+  font-size: 48px;
+  align-self: center;
+}
+
+/* CSS para o Controles.tsx */
+.controlesContainer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+.controleBotao {
+  margin: 0 10px;
+  padding: 10px 20px;
+}
+
+/* CSS para o Jogador.tsx */
+.jogadorItem {
+  margin-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+.jogadorNome {
+  margin-right: 15px;
+  min-width: 150px;
+  display: inline-block;
+}
+
+.jogadorPontuacao {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+/* CSS para o Time.tsx */
+.timeContainer {
+  border: 1px solid black;
+  padding: 20px;
+  width: 45%;
+}
+
+.pontuacaoTime {
+  font-size: 48px;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.nomeTime {
+  text-align: center;
+  margin-top: 5px;
+}
+
+.adicionarJogadorContainer {
+  margin: 20px 0;
+  display: flex;
+}
+
+.inputJogador {
+  flex-grow: 1;
+  margin-right: 10px;
+  padding: 8px;
+}

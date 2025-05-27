@@ -10,7 +10,6 @@ export default function Time({ timeId }) {
 
   const time = timeId === 'A' ? timeA : timeB; 
 
-
   const handleInserirClick = () => {
     handleAdicionarJogador(timeId, novoJogadorNome);
     setNovoJogadorNome(''); 
