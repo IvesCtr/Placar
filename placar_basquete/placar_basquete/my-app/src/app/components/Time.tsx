@@ -1,6 +1,7 @@
 import React, { useState, useContext, useMemo } from 'react';
 import Jogador from './Jogador';
 import { PlacarContext } from '../context/PlacarContext';
+import styles from './placar.module.css';
 
 
 export default function Time({ timeId }) {
@@ -18,17 +19,17 @@ export default function Time({ timeId }) {
   if (!time) return <div>Time não encontrado</div>;
 
   return (
-    <div style={{ border: '1px solid black', padding: '20px', width: '45%' }}>
-      <h2 style={{ fontSize: '48px', margin: '0 10px', textAlign: 'center' }}>{time.pontuacao}</h2>
-      <h3 style={{ textAlign: 'center', marginTop: '5px' }}>{time.nome}</h3>
+    <div className={styles.timeContainer}>
+      <h2 className={styles.pontuacaoTime}>{time.pontuacao}</h2>
+      <h3 className={styles.nomeTime}>{time.nome}</h3>
 
-      <div style={{ margin: '20px 0', display: 'flex' }}>
+      <div className={styles.adicionarJogadorContainer}>
         <input
           type="text"
           value={novoJogadorNome}
           onChange={(e) => setNovoJogadorNome(e.target.value)}
           placeholder="Nome do Jogador"
-          style={{ flexGrow: 1, marginRight: '10px', padding: '8px' }}
+          className={styles.inputJogador}
         />
         <button onClick={handleInserirClick}>Inserir Novo</button>
       </div>
