@@ -19,7 +19,7 @@ export const PlacarProvider = ({children}) => {
             timeA: JSON.parse(JSON.stringify(timeA)),
             timeB: JSON.parse(JSON.stringify(timeB)),
         };
-        setHistorico(historicoAnterior => [snapshotAtual, ...historicoAnterior].slice(0, 10));
+        setHistorico(historicoAnterior => [snapshotAtual, ...historicoAnterior].slice(0, 100));
     };
 
     const handleAdicionarJogador = (timeId, nomeJogador) => {
