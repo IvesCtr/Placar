@@ -4,7 +4,6 @@ import Controles from '../components/Controles';
 import { PlacarProvider, PlacarContext } from '../context/PlacarContext';
 import { useContext } from 'react';
 
-// Componente interno para acessar o contexto e renderizar
 function PlacarLayout() {
     const { times } = useContext(PlacarContext);
 
@@ -21,7 +20,6 @@ function PlacarLayout() {
     );
 }
 
-// Componente App principal que usa o Provider
 export default function App() {
   return (
     <PlacarProvider>

@@ -19,11 +19,9 @@ export default function Time({ timeId }) {
 
   return (
     <div style={{ border: '1px solid black', padding: '20px', width: '45%' }}>
-      {/* Placar total da equipe */}
       <h2 style={{ fontSize: '48px', margin: '0 10px', textAlign: 'center' }}>{time.pontuacao}</h2>
       <h3 style={{ textAlign: 'center', marginTop: '5px' }}>{time.nome}</h3>
 
-      {/* Input para adicionar novo jogador [cite: 5] */}
       <div style={{ margin: '20px 0', display: 'flex' }}>
         <input
           type="text"
@@ -34,8 +32,6 @@ export default function Time({ timeId }) {
         />
         <button onClick={handleInserirClick}>Inserir Novo</button>
       </div>
-
-      {/* Lista de jogadores [cite: 1] */}
       <div>
         {time.jogadores.map((jogador) => (
           <Jogador key={jogador.id} jogador={jogador} timeId={timeId} />
