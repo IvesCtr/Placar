@@ -7,19 +7,15 @@ import { PlacarProvider, PlacarContext } from './context/PlacarContext'; // Ajus
 
 // Componente interno para o layout, que acessa o contexto
 function PlacarLayout() {
-    const { times } = useContext(PlacarContext);
-
-    if (!times || times.length < 2) {
-        return <div>Carregando Times...</div>; // Estado de carregamento ou erro
-    }
+    const { timeA, timeB } = useContext(PlacarContext);
 
     return (
         <main className="container">
             <h1>Placar de Basquete</h1>
             <div className="placar-area">
-                <Time timeId={times[0].id} />
+                <Time timeId={timeA.id} />
                 <span className="vs-text">vs</span>
-                <Time timeId={times[1].id} />
+                <Time timeId={timeB.id} />
             </div>
             <Controles />
         </main>

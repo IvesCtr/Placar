@@ -2,29 +2,17 @@ import React, { useState, useContext, useMemo } from 'react';
 import Jogador from './Jogador';
 import { PlacarContext } from '../context/PlacarContext';
 
-interface TimeProps {
-  timeId: number;
-}
 
-export default function Time({ timeId }: TimeProps) {
-  const { times, jogadores, adicionarJogador } = useContext(PlacarContext);
+export default function Time({ timeId }) {
+  const { timeA, timeB, handleAdicionarJogador, handleAlterarNomeTime} = useContext(PlacarContext);
   const [novoJogadorNome, setNovoJogadorNome] = useState('');
 
-  const time = times.find((t) => t.id === timeId);
-  const jogadoresDoTime = useMemo(() => {
-    return jogadores
-      .filter((j) => j.timeId === timeId)
-      .sort((a, b) => b.pontos - a.pontos); // Ordena por pontos decrescente [cite: 10]
-  }, [jogadores, timeId]);
-
-  const placarTotal = useMemo(() => {
-      return jogadoresDoTime.reduce((acc, jogador) => acc + jogador.pontos, 0);
-  }, [jogadoresDoTime]);
+  const time = timeId === 'A' ? timeA : timeB; 
 
 
   const handleInserirClick = () => {
-    adicionarJogador(timeId, novoJogadorNome);
-    setNovoJogadorNome(''); // Limpa o input
+    handleAdicionarJogador(timeId, novoJogadorNome);
+    setNovoJogadorNome(''); 
   };
 
   if (!time) return <div>Time não encontrado</div>;
@@ -32,7 +20,7 @@ export default function Time({ timeId }: TimeProps) {
   return (
     <div style={{ border: '1px solid black', padding: '20px', width: '45%' }}>
       {/* Placar total da equipe */}
-      <h2 style={{ fontSize: '48px', margin: '0 10px', textAlign: 'center' }}>{placarTotal}</h2>
+      <h2 style={{ fontSize: '48px', margin: '0 10px', textAlign: 'center' }}>{time.pontuacao}</h2>
       <h3 style={{ textAlign: 'center', marginTop: '5px' }}>{time.nome}</h3>
 
       {/* Input para adicionar novo jogador [cite: 5] */}
@@ -49,8 +37,8 @@ export default function Time({ timeId }: TimeProps) {
 
       {/* Lista de jogadores [cite: 1] */}
       <div>
-        {jogadoresDoTime.map((jogador) => (
-          <Jogador key={jogador.id} jogador={jogador} />
+        {time.jogadores.map((jogador) => (
+          <Jogador key={jogador.id} jogador={jogador} timeId={timeId} />
         ))}
       </div>
     </div>

@@ -10,13 +10,11 @@ export default function Jogador({jogador, timeId}) {
       <span>
         {jogador.nome}
       </span>
-      {/* Botões para adicionar pontos [cite: 7] */}
       <button onClick={() => handleAdicionarPontuacao(timeId, jogador.id, 1)}> +1 </button>
       <button onClick={() => handleAdicionarPontuacao(timeId, jogador.id, 2)}> +2 </button>
       <button onClick={() => handleAdicionarPontuacao(timeId, jogador.id, 3)}> +3 </button>
-      {/* Exibe a pontuação individual [cite: 6] */}
       <span>
-        {jogador.pontos} pts
+        {jogador.pontuacao} pts
       </span>
     </div>
   );
