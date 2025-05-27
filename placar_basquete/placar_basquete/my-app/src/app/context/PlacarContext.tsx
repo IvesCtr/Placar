@@ -9,38 +9,38 @@ const dadosIniciaisTimes = (nomeTime) => ({
 })
 
 export const PlacarProvider = ({children}) => {
-    const [teamA, setTeamA] = useState(() => dadosIniciaisTimes("Ceará"));
-    const [teamB, setTeamB] = useState(() => dadosIniciaisTimes("Fortaleza"));
-    const [historico, setHistorico] = useState([]);
 
-    const salvarHistorico = useCallback(() => {
+    const [historico, setHistorico] = useState([]);
+    const [jogador, setJogador] = useState({id: "", nome: "", pontuacao: 0});
+    const [timeA, setTimeA] = useState({id: "A", nome: "Ceará", jogadores: [], pontuacao: 0});
+    const [timeB, setTimeB] = useState({id: "B", nome: "Fortaleza", jogadores: [], pontuacao: 0});
+
+    const salvarHistorico = () => {
         const snapshotAtual = {
-            teamA: JSON.parse(JSON.stringify(teamA)),
-            teamB: JSON.parse(JSON.stringify(teamB)),
+            timeA: JSON.parse(JSON.stringify(timeA)),
+            timeB: JSON.parse(JSON.stringify(timeB)),
         };
         setHistorico(historicoAnterior => [snapshotAtual, ...historicoAnterior].slice(0, 10));
-    }, [teamA, teamB]);
+    };
 
-    const handleAdicionarJogador = useCallback((teamId, nomeJogador) => {
+    const handleAdicionarJogador = (timeId, nomeJogador) => {
         if(!nomeJogador.trim()) return;
         salvarHistorico();
         const novoJogador = {id: Date.now().toString(), nome: nomeJogador, pontuacao: 0}
 
-        const atualizarTime = (timeAnterior) => ({
-            ...timeAnterior,
-            jogadores: [...timeAnterior.jogadores, novoJogador]
-            .sort((a, b) => (b.pontuacao - a.pontuacao))
-        })
+        const timeAtualizado = timeA.id === timeId ? timeA : timeB;
+        timeAtualizado.jogadores.push(novoJogador);
+        timeAtualizado.jogadores.sort((a, b) => b.pontuacao - a.pontuacao);
 
-        if(teamId === "teamA"){
-            setTeamA(atualizarTime);
+        if(timeId === "A"){
+            setTimeA(timeAtualizado);
         }
         else{
-            setTeamB(atualizarTime);
+            setTimeB(timeAtualizado);
         }
-    }, [salvarHistorico]);
+    };
 
-    const handleAdicionarPontuacao = useCallback((teamId, jogadorId, pontos) => {
+    const handleAdicionarPontuacao = (timeId, jogadorId, pontos) => {
         salvarHistorico();
 
         const atualizarTimeEPontuacao = (timeAnterior) => {
@@ -64,44 +64,44 @@ export const PlacarProvider = ({children}) => {
             };
         }
 
-        if(teamId === "teamA"){
-            setTeamA(atualizarTimeEPontuacao);
+        if(timeId === "teamA"){
+            setTimeA(atualizarTimeEPontuacao);
         }
         else{
-            setTeamB(atualizarTimeEPontuacao);
+            setTimeB(atualizarTimeEPontuacao);
         }
-    }, [salvarHistorico]);
+    };
 
-    const handleAlterarNomeTime = useCallback((novoNomeTeamA, novoNomeTeamB) => {
+    const handleAlterarNomeTime = (novoNomeTeamA, novoNomeTeamB) => {
         salvarHistorico();
 
         if(novoNomeTeamA && novoNomeTeamA.trim()){
-            setTeamA(prev => {return {...prev, nome: novoNomeTeamA.trim()}})
+            setTimeA(prev => {return {...prev, nome: novoNomeTeamA.trim()}})
         }
         if(novoNomeTeamB && novoNomeTeamB.trim()){
-            setTeamB(prev => {return {...prev, nome: novoNomeTeamB.trim()}})
+            setTimeB(prev => {return {...prev, nome: novoNomeTeamB.trim()}})
         }
-    }, [salvarHistorico])
+    }
 
-    const handleResetarPlacar = useCallback(() => {
+    const handleResetarPlacar = () => {
         salvarHistorico();
 
-        setTeamA(prev => {return {...prev, jogadores: [], pontuacao: 0}})
-        setTeamB(prev => {return {...prev, jogadores: [], pontuacao: 0}})
+        setTimeA(prev => {return {...prev, jogadores: [], pontuacao: 0}})
+        setTimeB(prev => {return {...prev, jogadores: [], pontuacao: 0}})
 
-    }, [salvarHistorico])
+    }
 
-    const handleDesfazerAcao = useCallback(() => {
+    const handleDesfazerAcao = () => {
         if(historico.length > 0){
             const estadoAnterior = historico[0];
             const novoHistorico = historico.slice(1);
 
-            setTeamA(estadoAnterior.teamA);
-            setTeamB(estadoAnterior.teamB);
+            setTimeA(estadoAnterior.teamA);
+            setTimeB(estadoAnterior.teamB);
 
             setHistorico(novoHistorico);
         }
-    }, [historico])
+    }
 
     const contextValue = {
         teamA,
@@ -118,12 +118,4 @@ export const PlacarProvider = ({children}) => {
             {children}
         </PlacarContext.Provider>
     );
-};
-
-export const usePlacar = () => {
-    const context = useContext(PlacarContext);
-    if(context === undefined){
-        throw new Error("usePlacar deve ser usado dentro de um PlacarProvider")
-    }
-    return context;
 };

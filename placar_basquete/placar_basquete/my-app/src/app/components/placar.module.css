@@ -1,0 +1,15 @@
+.jogador {
+    marginBottom: '10px';
+    borderBottom: '1px solid #eee';
+    paddingBottom: '10px';
+}
+.span_jogador{
+    marginRight: '15px'; 
+    minWidth: '150px'; 
+    display: 'inline-block';
+}
+
+.span2_jogador{
+    marginLeft: '15px';
+    fontWeight: 'bold';
+}
